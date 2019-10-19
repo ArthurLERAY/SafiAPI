@@ -9,10 +9,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-//TODO move to item class
-const UserDB = require('./src/database/Models/User');
-//TODO handle import
-//const UserClass = require('./src/Classes/UserClass');
+
+const UserClass = require('./src/Classes/UserClass');
 
 // Import routes
 const authRoute = require('./routes/auth');
@@ -30,8 +28,8 @@ app.use(cors());
 app.use('/api/user', authRoute);
 
 
-// let User = new UserClass('Arthur', 'LE RAY');
-// console.log(User.greet());
+let User = new UserClass('Arthur', 'LE RAY');
+console.log(User.greet());
 
 
-app.listen(3000, () => console.log('Server running'));
+//app.listen(3000, () => console.log('Server running'));
