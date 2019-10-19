@@ -4,6 +4,8 @@ const UserDB = require('../../src/database/Models/User');
 
 module.exports = class UserClass {
 
+
+
     constructor() {
     }
 
