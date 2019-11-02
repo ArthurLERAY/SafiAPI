@@ -1,10 +1,40 @@
 'use strict';
 const router = require('express').Router();
+const tables = require('../src/database/Models/loader');
 
+// The '/auth' route
+router.post('/', async (req, res) => {
 
-router.get('/register', (req, res) => {
-    res.send('Register,');
+    const loginReq = req.body.login;
+    const pwdReq = req.body.password;
+
+    // Check if creds are not null
+    if(loginReq.length > 0 && pwdReq.length > 0) {
+
+        const userTryingToConnect = await tables.Account.query().where('login', loginReq);
+        // Check if user exists with this login
+        if (userTryingToConnect.length > 0) {
+
+            const password = await tables.Account.query().where('login', loginReq).select('password');
+            // Check if both passwords match
+            if (pwdReq === password) {
+
+                const userToConnect = await tables.Employee.query().where('id', userTryingToConnect.employee_id);
+                res.send(userToConnect);
+
+            } else {
+                res.sendStatus(401);
+            }
+        } else {
+            res.sendStatus(404);
+        }
+
+    } else {
+        res.sendStatus(400);
+    }
+
 });
+
 
 
 module.exports = router;
