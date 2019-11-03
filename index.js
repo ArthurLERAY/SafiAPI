@@ -9,6 +9,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const methodOverride = require('method-override');
 
 const UserClass = require('./src/Classes/UserClass');
 
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(methodOverride());
 
 // Route Middleware
 app.use('/api/auth', authRoute);
@@ -46,6 +48,12 @@ app.use('/api/activity', activityRoute);
 app.use('/api/sheet', sheetRoute);
 app.use('/api/region', regionRoute);
 app.use('/api/evidence', evidenceRoute);
+
+// Default error message
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 //TODO handle static methods
 

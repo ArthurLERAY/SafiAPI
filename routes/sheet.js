@@ -10,8 +10,17 @@ router.get('/list', async (req, res) => {
 
 router.get('/find/:employee_id', async (req, res) => {
 
-    const sheet = await tables.CostsForm.query().where('employee_id', req.params.employee_id);
-    res.send(sheet);
+    try {
+
+        const sheet = await tables.CostsForm.query().where('employee_id', req.params.employee_id);
+        res.send(sheet);
+
+    } catch (err) {
+
+        res.sendStatus(500);
+
+    }
+
 });
 // TODO see in DB for default params
 router.get('/settings', async (req, res) => {
@@ -38,6 +47,28 @@ router.post('/create', (req, res) => {
                 res.sendStatus(400)
             }
         );
+
+});
+
+router.get('/type_employee/:sheet_type_id/:employee_id', async (req, res) => {
+
+    try {
+
+        const sheetsToSend = await tables.CostsForm.query().where('state_id', req.params.sheet_type_id).where('employee_id', req.params.employee_id);
+        res.send(sheetsToSend);
+
+    } catch (err) {
+
+        res.sendStatus(500);
+
+    }
+
+});
+
+// TODO see in DB for relation between costsForm & region
+router.get('/region/:region_id', async (req, res) => {
+
+    const sheets = await tables.CostsForm.query().where();
 
 });
 

@@ -9,12 +9,11 @@ router.post('/', async (req, res) => {
     const pwdReq = req.body.password;
 
     // Check if creds are not null
-    if(loginReq.length > 0 && pwdReq.length > 0) {
+    if(loginReq.length > 1 && pwdReq.length > 1) {
 
         const userTryingToConnect = await tables.Account.query().where('login', loginReq);
         // Check if user exists with this login
         if (userTryingToConnect.length > 0) {
-
             const password = await tables.Account.query().where('login', loginReq).select('password');
             // Check if both passwords match
             if (pwdReq === password) {
