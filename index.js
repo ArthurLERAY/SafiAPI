@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const methodOverride = require('method-override');
 
-const UserClass = require('./src/Classes/UserClass');
+const Employee = require('./src/Classes/Employee');
 
 // Import routes
 const authRoute = require('./routes/auth');
@@ -55,12 +55,11 @@ app.use(function(err, req, res, next) {
     res.status(500).send('Something broke!');
 });
 
-//TODO handle static methods
+app.get('/test', async (req, res) => {
 
-// let User = new UserClass('Arthur', 'LE RAY');
-// (async () => {
-//     console.log(await UserClass.get());
-// })();
+    res.send(await Employee.getAll());
+
+});
 
 
 app.listen(3000, () => console.log('Server running'));

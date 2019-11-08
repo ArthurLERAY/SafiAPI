@@ -4,28 +4,46 @@ const dbTables = require('../../src/database/Models/loader');
 
 module.exports = class Object {
 
-    constructor (modelName) {
-        console.log('Test');
-        this.modelName = modelName;
+    // Get queries
+
+    static async getAll() {
+        return dbTables[this.modelName].query();
     }
 
-    //Get queries
-
-    static get() {
-        const req = 'dbTables.' + this.modelName + '.query()';
-        return eval(req);
-    }
-    whereId(id) {
-        const req = `dbTables.` + this.modelName + `.query().findById(${id})`;
-        return eval(req);
+    static async getWhereId(id) {
+        return dbTables[this.modelName].query().findById(id);
     }
 
-    where(column, value) {
-        const req = `dbTables.` + this.modelName + `.query().where('${column}', '${value}')`;
-        return eval(req);
+    static async getWhere(column, value) {
+        return dbTables[this.modelName].query().where(column, value);
     }
 
-    //Post queries
+    // Post/Put/Delete queries
 
+    static async patch(data, where) {
+        try {
+            await dbTables[this.modelName].query().patch({data}).where(where["column"], where["value"]);
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    }
+
+    static async create(data) {
+        try {
+            await dbTables[this.modelName].query().insert(data);
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    }
+
+    static async delete(where) {
+        try {
+            await dbTables[this.modelName].query().delete().where(where["column"], where["value"]);
+        }catch (err) {
+            console.error(err);
+        }
+    }
 
 };

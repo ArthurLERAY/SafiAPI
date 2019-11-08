@@ -3,6 +3,7 @@ const router = require('express').Router();
 const tables = require('../src/database/Models/loader');
 
 // The '/auth' route
+// TODO handle crypting pwd
 router.post('/', async (req, res) => {
 
     const loginReq = req.body.login;

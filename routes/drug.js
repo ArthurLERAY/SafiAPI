@@ -5,7 +5,7 @@ const tables = require('../src/database/Models/loader');
 router.get('/stats', async (req, res) => {
 
     let donationList = [];
-    const drugs = tables.Drug.query();
+    const drugs = await tables.Drug.query();
     // TODO may have to precise the index [0] after drugs because of querybuilder arch
     for (const drug of drugs) {
 
