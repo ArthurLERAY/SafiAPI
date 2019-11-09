@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Account = require('../src/Classes/Account');
+const Employee = require('../src/Classes/Employee');
 
 // The '/auth' route
 // TODO handle crypting pwd
@@ -12,14 +13,14 @@ router.post('/', async (req, res) => {
     // Check if creds are not null
     if(loginReq.length > 1 && pwdReq.length > 1) {
 
-        const userTryingToConnect = await tables.Account.query().where('login', loginReq);
+        const userTryingToConnect = await Account.getWhere('login', loginReq);
         // Check if user exists with this login
         if (userTryingToConnect.length > 0) {
-            const password = await tables.Account.query().where('login', loginReq).select('password');
+            const password = await Account.getWhere('login', loginReq, 'password');
             // Check if both passwords match
-            if (pwdReq === password) {
+            if (pwdReq === password[0].password) {
 
-                const userToConnect = await tables.Employee.query().where('id', userTryingToConnect.employee_id);
+                const userToConnect = await Employee.getWhere('id', userTryingToConnect[0].employee_id);
                 res.send(userToConnect);
 
             } else {

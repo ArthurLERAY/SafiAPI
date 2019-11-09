@@ -14,8 +14,12 @@ module.exports = class Object {
         return dbTables[this.modelName].query().findById(id);
     }
 
-    static async getWhere(column, value) {
-        return dbTables[this.modelName].query().where(column, value);
+    static async getWhere(column, value, getOneColumn = null) {
+        if (getOneColumn) {
+            return dbTables[this.modelName].query().where(column, value).select(getOneColumn);
+        } else {
+            return dbTables[this.modelName].query().where(column, value);
+        }
     }
 
     // Post/Put/Delete queries
@@ -41,7 +45,7 @@ module.exports = class Object {
     static async delete(where) {
         try {
             await dbTables[this.modelName].query().delete().where(where["column"], where["value"]);
-        }catch (err) {
+        } catch (err) {
             console.error(err);
         }
     }

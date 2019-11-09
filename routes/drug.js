@@ -1,15 +1,16 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Drug = require('../src/Classes/Drug');
+const Donate = require('../src/Classes/Donate');
 
 router.get('/stats', async (req, res) => {
 
     let donationList = [];
-    const drugs = await tables.Drug.query();
+    const drugs = await Drug.getAll();
     // TODO may have to precise the index [0] after drugs because of querybuilder arch
     for (const drug of drugs) {
 
-        const donation = await tables.Donate.query().where('drug_id', drug.id);
+        const donation = await Donate.getWhere('drug_id', drug.id);
         donationList.push({
             drug_id: drug.id,
             drug_label: drug.label,
@@ -24,21 +25,21 @@ router.get('/stats', async (req, res) => {
 
 router.get('/list', async (req, res) => {
 
-    const drugsList = await tables.Drug.query();
+    const drugsList = await Drug.getAll();
     res.send(drugsList);
 
 });
 
 router.get('/find/:id', async (req, res) => {
 
-    const drug = await tables.Drug.query().findById(req.params.id);
+    const drug = await Drug.getWhereId(req.params.id);
     res.send(drug);
 
 });
 
 router.post('/add', async (req, res) => {
 
-    tables.Drug.query().insert({
+    Drug.create({
         label: req.body.label,
         samplePrice: req.body.samplePrice,
         legalSubmission: req.body.legalSubmission,
@@ -46,13 +47,14 @@ router.post('/add', async (req, res) => {
         composition: req.body.composition,
         effects: req.body.effects,
         counterIndicator: req.body.counterIndicator,
-        familly_id: req.body.familly_id
+        family_id: req.body.family_id
     })
         .then(resp => {
                 res.sendStatus(201);
             }
         )
         .catch(err => {
+            console.error(err);
                 res.sendStatus(400)
             }
         );

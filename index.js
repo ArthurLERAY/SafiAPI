@@ -58,7 +58,7 @@ app.use(function(err, req, res, next) {
 
 app.get('/test', async (req, res) => {
 
-    res.send(await Costs.getAll());
+    res.send(await Employee.getWhere('id', 5));
 
 });
 

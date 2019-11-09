@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const tables = require('../src/database/Models/loader');
+const CostsForm = require('../src/Classes/CostsForm');
 
 router.get('/list', async (req, res) => {
 
@@ -12,7 +13,7 @@ router.get('/find/:employee_id', async (req, res) => {
 
     try {
 
-        const sheet = await tables.CostsForm.query().where('employee_id', req.params.employee_id);
+        const sheet = await CostsForm.getWhere('employee_id', req.params.employee_id);
         res.send(sheet);
 
     } catch (err) {
@@ -30,7 +31,7 @@ router.get('/settings', async (req, res) => {
 
 router.post('/create', (req, res) => {
 
-    tables.CostsForm.query().insert({
+    CostsForm.create({
         employee_id: req.body.employee_id,
         evidenceNumber: req.body.evidenceNumber,
         creationDate: req.body.creationDate,
@@ -54,7 +55,7 @@ router.get('/type_employee/:sheet_type_id/:employee_id', async (req, res) => {
 
     try {
 
-        const sheetsToSend = await tables.CostsForm.query().where('state_id', req.params.sheet_type_id).where('employee_id', req.params.employee_id);
+        const sheetsToSend = await tables.CostsForm.getWhere('state_id', req.params.sheet_type_id).where('employee_id', req.params.employee_id);
         res.send(sheetsToSend);
 
     } catch (err) {
@@ -68,7 +69,7 @@ router.get('/type_employee/:sheet_type_id/:employee_id', async (req, res) => {
 // TODO see in DB for relation between costsForm & region
 router.get('/region/:region_id', async (req, res) => {
 
-    const sheets = await tables.CostsForm.query().where();
+    //const sheets = await CostsForm.getWhere();
 
 });
 

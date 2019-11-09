@@ -1,10 +1,10 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const VisitReport = require('../src/Classes/VisitReport');
 
 router.post('/create', (req, res) => {
 
-    tables.VisitReport.query().insert({
+    VisitReport.create({
         date: req.body.date,
         record: req.body.record,
         reason: req.body.reason,
@@ -17,6 +17,7 @@ router.post('/create', (req, res) => {
             }
         )
         .catch(err => {
+                console.error(err);
                 res.sendStatus(400)
             }
         );
@@ -25,13 +26,13 @@ router.post('/create', (req, res) => {
 
 router.get('/list', async (req, res) => {
 
-    const reports = await tables.VisitReport.query();
+    const reports = await VisitReport.getAll();
     res.send(reports);
 });
 
 router.get('/find/:id', async (req, res) => {
 
-    const report = await tables.VisitReport.query().findById(req.params.id);
+    const report = await VisitReport.getWhereId(req.params.id);
     res.send(report);
 });
 

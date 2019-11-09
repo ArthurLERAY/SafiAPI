@@ -1,10 +1,10 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Family = require('../src/Classes/Family');
 
 router.get('/list', async (req, res) => {
 
-    const families = await tables.Family.query();
+    const families = await Family.getAll();
     res.send(families);
 });
 

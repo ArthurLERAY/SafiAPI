@@ -1,10 +1,10 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Region = require('../src/Classes/Region');
 
 router.get('/list', async (req, res) => {
 
-    const regions = await tables.Region.query();
+    const regions = await Region.getAll();
     res.send(regions);
 });
 

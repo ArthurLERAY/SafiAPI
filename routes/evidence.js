@@ -1,10 +1,10 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Evidence = require('../src/Classes/Evidence');
 
 router.post('/add', (req, res) => {
 
-    tables.Evidence.query().insert({
+    Evidence.create({
         label: req.body.label,
         attachedDoc: req.body.attachedDoc,
         extraChargeCosts_id: req.body.extraChargeCosts_id
@@ -21,7 +21,7 @@ router.post('/add', (req, res) => {
 
 router.get('/find/:evidence_id', async (req, res) => {
 
-    const evidence = await tables.Evidence.query().where('id', req.params.evidence_id);
+    const evidence = await Evidence.getWhere('id', req.params.evidence_id);
     res.send(evidence);
 });
 

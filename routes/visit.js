@@ -1,11 +1,11 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
+const Visit = require('../src/Classes/Visit');
 
 
 router.get('/date/:date', async (req, res) => {
 
-    const visits = await tables.Visit.query().where('date', req.params.date);
+    const visits = await Visit.getWhere('date', req.params.date);
     res.send(visits);
 
 });
@@ -13,11 +13,15 @@ router.get('/date/:date', async (req, res) => {
 
 router.get('/practitioner/:praticien_id', async (req, res) => {
 
-    const visitsToSend = await tables.Visit.query().where('practitioner_id', req.params.praticien_id);
+    const visitsToSend = await Visit.getWhere('practitioner_id', req.params.praticien_id);
     res.send(visitsToSend);
 
 });
 
-router.get('/stats/:date');
+router.get('/stats/:date', async (req, res) => {
+
+    const visits = await Visit.getWhere('date', req.params.date);
+    res.send(visits);
+});
 
 module.exports = router;
