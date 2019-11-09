@@ -2,7 +2,6 @@
 // Modules imports
 require('dotenv').config();
 const express = require('express');
-const moment = require('moment');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
@@ -10,9 +9,13 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const methodOverride = require('method-override');
+const fs = require('fs');
+const moment = require('moment');
 
+// Import classes
 const Employee = require('./src/Classes/Employee');
 const Costs = require('./src/Classes/Costs');
+
 
 // Import routes
 const authRoute = require('./routes/auth');
@@ -52,15 +55,20 @@ app.use('/api/evidence', evidenceRoute);
 
 // Default error message
 app.use(function(err, req, res, next) {
-    console.error(err.stack);
+    addError(err.stack);
     res.status(500).send('Something broke!');
-});
-
-app.get('/test', async (req, res) => {
-
-    res.send(await Employee.getWhere('id', 5));
-
 });
 
 
 app.listen(3000, () => console.log('Server running'));
+
+function addError(error) {
+
+    const log = `${moment().format("MM-DD-YYYY LT")} : ${error} \n`;
+
+    fs.appendFile('./logs', log, function(err) {
+        if (err) {
+            return console.error(err);
+        }
+    });
+}
