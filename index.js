@@ -12,6 +12,7 @@ const crypto = require('crypto');
 const methodOverride = require('method-override');
 
 const Employee = require('./src/Classes/Employee');
+const Costs = require('./src/Classes/Costs');
 
 // Import routes
 const authRoute = require('./routes/auth');
@@ -57,7 +58,7 @@ app.use(function(err, req, res, next) {
 
 app.get('/test', async (req, res) => {
 
-    res.send(await Employee.getAll());
+    res.send(await Costs.getAll());
 
 });
 
