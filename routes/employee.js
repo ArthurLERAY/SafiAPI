@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Employee = require('../src/Classes/Employee');
 
 router.get('/find/:id', async (req, res) => {
 

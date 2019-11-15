@@ -1,7 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const tables = require('../src/database/Models/loader');
-const CostsForm = require('../src/Classes/CostsForm');
 
 router.get('/list', async (req, res) => {
 

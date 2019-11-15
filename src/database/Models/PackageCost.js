@@ -3,10 +3,10 @@
 
 const Model = require('./Model');
 
-module.exports = class Employee extends Model {
+module.exports = class PackageCost extends Model {
 
     static get tableName() {
-        return 'employee'
+        return 'packageCost'
     }
 
 };

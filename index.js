@@ -14,7 +14,6 @@ const moment = require('moment');
 
 // Import classes
 const Employee = require('./src/Classes/Employee');
-const Costs = require('./src/Classes/Costs');
 
 
 // Import routes

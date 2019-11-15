@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Evidence = require('../src/Classes/Evidence');
 
 router.post('/add', (req, res) => {
 

@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Region = require('../src/Classes/Region');
 
 router.get('/list', async (req, res) => {
 

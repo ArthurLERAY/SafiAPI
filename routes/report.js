@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const VisitReport = require('../src/Classes/VisitReport');
 
 router.post('/create', (req, res) => {
 

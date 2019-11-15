@@ -1,12 +1,12 @@
 'use strict';
 
+
 const Model = require('./Model');
 
 module.exports = class Family extends Model {
 
-    static get tableName()
-    {
-        return 'family';
+    static get tableName() {
+        return 'family'
     }
 
 };

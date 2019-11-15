@@ -1,7 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Account = require('../src/Classes/Account');
-const Employee = require('../src/Classes/Employee');
 
 // The '/auth' route
 // TODO handle crypting pwd

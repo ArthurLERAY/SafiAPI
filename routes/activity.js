@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Activity = require('../src/Classes/Complementary_activity');
 
 // TODO see for a row that allows to see if CA is allowed or waiting
 router.post('/ask', (req, res) => {

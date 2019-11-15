@@ -1,7 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Drug = require('../src/Classes/Drug');
-const Donate = require('../src/Classes/Donate');
 
 router.get('/stats', async (req, res) => {
 
