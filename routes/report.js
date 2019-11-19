@@ -1,12 +1,13 @@
 'use strict';
 const router = require('express').Router();
+const VisitReport = require('../src/Classes/VisitReport');
 
 router.post('/create', (req, res) => {
 
     VisitReport.create({
         date: req.body.date,
-        record: req.body.record,
         reason: req.body.reason,
+        results: req.body.results,
         employee_id: req.body.employee_id,
         practitioner_id: req.body.practitioner_id,
         status: req.body.status

@@ -1,12 +1,34 @@
 'use strict';
 const router = require('express').Router();
+const Activity = require('../src/Classes/ComplementaryActivities');
+const Invite = require('../src/Classes/Invite');
 
 // TODO see for a row that allows to see if CA is allowed or waiting
-router.post('/ask', (req, res) => {
+router.post('/ask', async (req, res) => {
 
-    // tables.complementary_activity.query().insert({
-    //
-    // })
+
+    const maxCa = [];
+    Activity.create({
+
+        number: req.body.number,
+        date: req.body.date,
+        place: req.body.place,
+        theme: req.body.theme,
+        employee_id: req.body.employee_id
+
+    }).then(async resp => {
+        maxCa.push(await Activity.getAll());
+
+        Invite.create({
+            specialization: req.body.specialization,
+            ca_id: maxCa[maxCa.length-1],
+            practitioner_id: req.body.practitioner_id
+        });
+        res.sendStatus(201);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
 
 });
 
@@ -15,7 +37,7 @@ router.post('/create', (req, res) => {
 
     Activity.create({
 
-        num: req.body.num,
+        number: req.body.number,
         date: req.body.date,
         place: req.body.place,
         theme: req.body.theme,
@@ -40,7 +62,7 @@ router.put('/edit/:activity_id', (req, res) => {
 
     Activity.patch({
 
-        num: req.body.num,
+        number: req.body.number,
         date: req.body.date,
         place: req.body.place,
         theme: req.body.place,

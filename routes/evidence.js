@@ -1,12 +1,12 @@
 'use strict';
 const router = require('express').Router();
+const Evidence = require('../src/Classes/Justificatory');
 
 router.post('/add', (req, res) => {
 
     Evidence.create({
-        label: req.body.label,
-        attachedDoc: req.body.attachedDoc,
-        extraChargeCosts_id: req.body.extraChargeCosts_id
+        name: req.body.name,
+        attachment: req.body.attachment,
     }).then(resp => {
         res.sendStatus(201);
         }

@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const Visit = require('../src/Classes/VisitReport');
 
 
 router.get('/date/:date', async (req, res) => {

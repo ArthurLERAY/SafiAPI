@@ -1,5 +1,9 @@
 'use strict';
 const router = require('express').Router();
+const Employee = require('../src/Classes/Employee');
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+const IV_LENGTH = 16;
+
 
 // The '/auth' route
 // TODO handle crypting pwd
@@ -11,15 +15,14 @@ router.post('/', async (req, res) => {
     // Check if creds are not null
     if(loginReq.length > 1 && pwdReq.length > 1) {
 
-        const userTryingToConnect = await Account.getWhere('login', loginReq);
+        const userTryingToConnect = await Employee.getWhere('login', loginReq);
         // Check if user exists with this login
         if (userTryingToConnect.length > 0) {
-            const password = await Account.getWhere('login', loginReq, 'password');
+            const password = await Employee.getWhere('login', loginReq, 'password');
             // Check if both passwords match
             if (pwdReq === password[0].password) {
 
-                const userToConnect = await Employee.getWhere('id', userTryingToConnect[0].employee_id);
-                res.send(userToConnect);
+                res.send(userTryingToConnect);
 
             } else {
                 res.sendStatus(401);
@@ -33,6 +36,32 @@ router.post('/', async (req, res) => {
     }
 
 });
+
+//TODO Voir avec l'équipe la méthode d'encryption
+
+async function encrypt(text) {
+    let iv = crypto.randomBytes(IV_LENGTH);
+    let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
+    let encrypted = cipher.update(text);
+
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+
+    return iv.toString('hex') + ':' + encrypted.toString('hex');
+}
+
+function decrypt(text) {
+    let textParts = text.split(':');
+    let iv = Buffer.from(textParts.shift(), 'hex');
+    let encryptedText = Buffer.from(textParts.join(':'), 'hex');
+    console.log(iv.length);
+    let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
+    let decrypted = decipher.update(encryptedText);
+
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+    return decrypted.toString();
+}
+
 
 
 

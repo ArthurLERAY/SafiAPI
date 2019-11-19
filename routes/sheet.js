@@ -1,9 +1,10 @@
 'use strict';
 const router = require('express').Router();
+const CostsForm = require('../src/Classes/ExpenseSheet');
 
 router.get('/list', async (req, res) => {
 
-    const sheets = await tables.CostsForm.query();
+    const sheets = await CostsForm.getAll();
     res.send(sheets);
 });
 
@@ -31,11 +32,10 @@ router.post('/create', (req, res) => {
 
     CostsForm.create({
         employee_id: req.body.employee_id,
-        evidenceNumber: req.body.evidenceNumber,
         creationDate: req.body.creationDate,
-        valueAmount: req.body.valueAmount,
-        modifDate: req.body.modifDate,
-        state_id: req.body.state_id,
+        totalAmount: req.body.totalAmount,
+        modificationDate: req.body.modificationDate,
+        sheetState_id: req.body.sheetState_id,
         ref: req.body.ref
     })
         .then(resp => {
@@ -53,7 +53,7 @@ router.get('/type_employee/:sheet_type_id/:employee_id', async (req, res) => {
 
     try {
 
-        const sheetsToSend = await tables.CostsForm.getWhere('state_id', req.params.sheet_type_id).where('employee_id', req.params.employee_id);
+        const sheetsToSend = await CostsForm.getWhere('state_id', req.params.sheet_type_id).where('employee_id', req.params.employee_id);
         res.send(sheetsToSend);
 
     } catch (err) {

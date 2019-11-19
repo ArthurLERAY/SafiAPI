@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const Employee = require('../src/Classes/Employee');
 
 router.get('/find/:id', async (req, res) => {
 
@@ -10,19 +11,19 @@ router.get('/find/:id', async (req, res) => {
 router.put('/edit', (req, res) => {
 
     Employee.patch({
-        matriculate: req.body.matriculate,
-        name: req.body.name,
+        code: req.body.code,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        login: req.body.login,
+        password: req.body.password,
         address: req.body.address,
-        pc: req.body.pc,
+        postalCode: req.body.postalCode,
         city: req.body.city,
-        tel: req.body.tel,
-        employmentDate: req.body.employmentDate,
-        sector_id: req.body.sector_id,
-        department_id: req.body.department_id,
-        departure_id: req.body.departure_id,
-        post_id: req.body.post_id,
-        service_type: req.body.service_type,
-        accountant_id: req.body.accountant_id
+        phone: req.body.phone,
+        hireDate: req.body.hireDate,
+        timespan: req.body.timespan,
+        api_token: req.body.api_token,
+        district_id: req.body.district_id
     }, {column: 'id', value: req.body.id})
         .then(resp => {
                 res.sendStatus(202);
@@ -39,19 +40,19 @@ router.put('/edit', (req, res) => {
 router.post('/create', (req, res) => {
 
     Employee.create({
-        matriculate: req.body.matriculate,
-        name: req.body.name,
+        code: req.body.code,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        login: req.body.login,
+        password: req.body.password,
         address: req.body.address,
-        pc: req.body.pc,
+        postalCode: req.body.postalCode,
         city: req.body.city,
-        tel: req.body.tel,
-        employmentDate: req.body.employmentDate,
-        sector_id: req.body.sector_id,
-        department_id: req.body.department_id,
-        departure_id: req.body.departure_id,
-        post_id: req.body.post_id,
-        service_type: req.body.service_type,
-        accountant_id: req.body.accountant_id
+        phone: req.body.phone,
+        hireDate: req.body.hireDate,
+        timespan: req.body.timespan,
+        api_token: req.body.api_token,
+        district_id: req.body.district_id
     }).then(resp => {
             res.sendStatus(201);
         }
@@ -81,6 +82,7 @@ router.delete('/delete', (req, res) => {
 
 // TODO see the DB for the row 'state' none for now
 router.put('/changeState', async (req, res) => {
+
 
 
 });
