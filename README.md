@@ -8,4 +8,4 @@ Using **Knex** and **ObjectionJS** to manage DB and Models
 
 To launch as docker project use :
 
-`docker run -d -p 127.0.0.1:52080:3000 --name SafiAPI -v "$PWD":/usr/src/app -w /usr/src/app node:8 node index.js`
+`docker run -d -p 0.0.0.0:52080:3000 --name SafiAPI -v "$PWD":/usr/src/app -w /usr/src/app node:latest node index.js`
