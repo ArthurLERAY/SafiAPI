@@ -24,4 +24,20 @@ router.get('/stats/:date', async (req, res) => {
     res.send(visits);
 });
 
+router.post('/create', (req, res) => {
+
+    Visit.create({
+        date: req.body.date,
+        employee_id: req.body.employee_id,
+        practitioner_id: req.body.practitioner_id,
+        report_id: req.body.report_id
+    }).then(resp => {
+        res.sendStatus(201);
+    })
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+});
+
 module.exports = router;

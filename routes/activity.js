@@ -58,7 +58,7 @@ router.get('/find/:activity_id', async (req, res) => {
     res.send(activity);
 });
 
-router.put('/edit/:activity_id', (req, res) => {
+router.put('/edit', (req, res) => {
 
     Activity.patch({
 
